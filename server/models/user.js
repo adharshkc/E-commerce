@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const bcrypt = require('bcrypt')
 
 const userSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: [true, "Please enter your name"],
   },
@@ -24,5 +25,11 @@ const userSchema = new mongoose.Schema({
     default: Date.now(),
   },
 });
+
+userSchema.pre('save', async function(){
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt)
+})
+
 
 module.exports = new mongoose.model("User", userSchema);
