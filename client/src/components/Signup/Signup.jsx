@@ -1,19 +1,34 @@
 import React from 'react'
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios'
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
+import {toast} from "react-toastify"
 
 const Signup = () => {
-  const [firstname, setFirtname] = useState('')
+  const [username, setName] = useState('')
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [conPassword, setConPassword] = useState('')
+  // const [conPassword, setConPassword] = useState('')
   const [visible, setVisible] = useState(false);
   const [visible1, setVisible1] = useState(false);
+
   const handleSubmit = (e)=>{
     e.preventDefault()
-    alert(` welcome ${firstname}`)
+    axios
+    .post('http://localhost:8000/register', {username, email, password})
+    .then((res)=>{
+      // toast.success(res.data.message);
+      // setName('')
+      // setEmail('')
+      // setPassword('')
+      console.log(res.data)
+    }).catch((error)=>{
+      // toast.error(error.response.data.message)
+      console.log(error)
+    })
+    
   }
   return (
     <div className="min-h-screen bg-gray-100 py-4 flex flex-col justify-center sm:py-10">
@@ -31,12 +46,12 @@ const Signup = () => {
                 <div className="relative">
                   <input
                     autoComplete="off"
-                    id="firstname"
-                    value={firstname}
-                    name="firstname"
+                    id="username"
+                    value={username}
+                    name="username"
                     type="text"
                     required
-                    onChange={(e) => setFirtname(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                     className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                     placeholder="Email address"
                   />
@@ -100,7 +115,7 @@ const Signup = () => {
                     />
                   )}
                 </div>
-                <div className="relative">
+                {/* <div className="relative">
                   <input
                     autoComplete="off"
                     id="conPassword"
@@ -132,7 +147,7 @@ const Signup = () => {
                       onClick={() => setVisible(true)}
                     />
                   )}
-                </div>
+                </div> */}
                 <div className="relative">
                   <button className="bg-blue-500 text-white rounded-md px-2 py-1">
                     Submit

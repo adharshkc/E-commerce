@@ -9,27 +9,28 @@ module.exports.registerUser = async (req, res) => {
     res.status(404);
     res.send("user already exist");
     throw new Error('user already exist')
-  }
+  }else{
 
   //create user
   const user = await User.create({ username, email, password })
-    // .then(() => {
-    //   res.status(201).json({
-    //     message: "user added successfully",
-    //   });
-    // })
-    // .catch((error) => {
-    //   res.status(500).json({
-    //     error: error,
-    //   });
-    // });
-  if(user) {
+    .then(() => {
       res.status(201).json({
-          _id: user.id,
-          username: user.username,
-          email:user.email
-      })
-  }else{
-      res.status(400)
-  }
+        message: "user added successfully",
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error,
+      });
+    });
+}
+//   if(user) {
+//       res.status(201).json({
+//           _id: user.id,
+//           username: user.username,
+//           email:user.email
+//       })
+//   }else{
+//       res.status(400)
+//   }
 };
