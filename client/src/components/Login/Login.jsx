@@ -1,16 +1,32 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios'
 import { AiOutlineEye } from "react-icons/ai";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
+import {ToastContainer, toast} from 'react-toastify'
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
+  
   const handleSubmit = (e)=>{
     e.preventDefault()
-    alert(`email is ${email}and password is ${password}`)
+    
+    axios.post('http://localhost:8000/login', {email, password})
+    .then((res)=>{
+      toast.success('login.success')
+      setEmail('')
+      setPassword('')
+      const user  = [email, password]
+      console.log(user)
+      alert('login successfull')
+    }).catch((error)=>{
+      toast.error(error.response.data.message)
+      console.log(error);
+      console.log(email)
+    })
   }
 
   return (
@@ -79,7 +95,7 @@ const Login = () => {
                   )}
                 </div>
                 <div className="relative">
-                  <button className="bg-blue-500 text-white rounded-md px-2 py-1">
+                  <button  className="bg-blue-500 text-white rounded-md px-2 py-1">
                     Submit
                   </button>
                 </div>
@@ -95,6 +111,7 @@ const Login = () => {
                   Sign Up
                 </Link>
               </div>
+              
             </div>
           </div>
         </div>

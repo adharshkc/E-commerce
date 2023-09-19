@@ -10,23 +10,21 @@ const Signup = () => {
   const [username, setName] = useState('')
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [conPassword, setConPassword] = useState('')
   const [visible, setVisible] = useState(false);
-  const [visible1, setVisible1] = useState(false);
 
   const handleSubmit = (e)=>{
     e.preventDefault()
+
     axios
     .post('http://localhost:8000/register', {username, email, password})
     .then((res)=>{
-      // toast.success(res.data.message);
-      // setName('')
-      // setEmail('')
-      // setPassword('')
-      console.log(res.data)
+      toast.success(res.data.message);
+      setName('')
+      setEmail('')
+      setPassword('')
+      alert('usser created succesfully')
     }).catch((error)=>{
-      // toast.error(error.response.data.message)
-      console.log(error)
+      toast.error(error.response.data.message)
     })
     
   }
@@ -90,7 +88,7 @@ const Signup = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     name="password"
                     required
-                    type={visible1 ? "text" : "password"}
+                    type={visible ? "text" : "password"}
                     className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                     placeholder="Password"
                   />
@@ -101,42 +99,9 @@ const Signup = () => {
                   >
                     Password
                   </label>
-                  {visible1 ? (
-                    <AiOutlineEye
-                      className="absolute right-2 top-2 cursor-pointer"
-                      size={25}
-                      onClick={() => setVisible1(false)}
-                    />
-                  ) : (
-                    <AiOutlineEyeInvisible
-                      className="absolute right-2 top-2 cursor-pointer"
-                      size={25}
-                      onClick={() => setVisible1(true)}
-                    />
-                  )}
-                </div>
-                {/* <div className="relative">
-                  <input
-                    autoComplete="off"
-                    id="conPassword"
-                    value={conPassword}
-                    onChange={(e) => setConPassword(e.target.value)}
-                    name="conPassword"
-                    required
-                    type={visible ? "text" : "password"}
-                    className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                    placeholder="Password"
-                  />
-
-                  <label
-                    htmlFor="password"
-                    className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
-                  >
-                    Confirm Password
-                  </label>
                   {visible ? (
                     <AiOutlineEye
-                      className="absolute right-2 top-2 cursor-pointer "
+                      className="absolute right-2 top-2 cursor-pointer"
                       size={25}
                       onClick={() => setVisible(false)}
                     />
@@ -147,16 +112,14 @@ const Signup = () => {
                       onClick={() => setVisible(true)}
                     />
                   )}
-                </div> */}
+                </div>
+            
                 <div className="relative">
                   <button className="bg-blue-500 text-white rounded-md px-2 py-1">
                     Submit
                   </button>
                 </div>
-                {/* <div className="flex items-center">
-                  <input type="checkbox" />
-                  <h4 className="ml-1 text-base ">Remember me</h4>
-                </div> */}
+               
               </form>
 
               <div className="text-base  text-gray-700 flex items-center">

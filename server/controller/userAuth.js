@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/user");
 const asyncHandler = require("express-async-handler");
 
+
 module.exports.registerUser = async (req, res) => {
   const { username, email, password } = req.body;
   const userExist = await User.findOne({ email });
@@ -24,6 +25,7 @@ module.exports.registerUser = async (req, res) => {
       });
     });
 }
+}
 //   if(user) {
 //       res.status(201).json({
 //           _id: user.id,
@@ -33,4 +35,30 @@ module.exports.registerUser = async (req, res) => {
 //   }else{
 //       res.status(400)
 //   }
-};
+
+
+//login user
+module.exports.loginUser = async(req, res)=>{
+  const {email, password} = req.body
+  try{
+  const userFind = await User.findOne({email, password})
+
+  if(!userFind){
+    res.status(400).json({
+      message: "login not successfull",
+      error: "user not found"
+    }) 
+  }else{
+    res.status(200).json({
+      message: 'Login successfull',
+      
+    })
+  }
+  }
+catch(error){
+  res.status(400).json({
+    message:"error while login",
+    error: error.message
+  })
+}
+}
